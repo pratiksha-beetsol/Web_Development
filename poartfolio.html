@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pratiksha Gaikwad — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-mQ6Xn6b5v5Q+fXqkYw3h1k1y0YqjK8Zf3z0h+6c1q1gkY+ZQ1Q1+f1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root{
+      --accent:#6c63ff;
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+      --max-width:1100px;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg,#071021 0%, #071827 60%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    .container{max-width:var(--max-width);margin:40px auto;padding:20px}
+    header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:28px
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .avatar{width:58px;height:58px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#4ecdc4);display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav ul{display:flex;gap:14px;list-style:none;padding:0;margin:0}
+    nav a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px}
+    nav a:hover{color:#fff;background:var(--glass)}
+
+    .hero{
+      display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;margin-bottom:36px
+    }
+    .intro h1{font-size:28px;margin:0 0 8px}
+    .intro p.lead{color:var(--muted);margin:0 0 18px}
+    .cta{display:flex;gap:12px}
+    .btn{background:var(--accent);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:600}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:12px;padding:18px}
+    .profile-card{text-align:center}
+    .profile-photo{width:140px;height:140px;border-radius:16px;margin:0 auto 12px;overflow:hidden;display:block;background:linear-gradient(135deg,#334155,#0ea5a2);display:flex;align-items:center;justify-content:center;font-size:48px}
+    .skills{display:flex;flex-direction:column;gap:12px}
+    .skill{display:flex;flex-direction:column;gap:6px}
+    .skill .bar{height:10px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden}
+    .skill .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#4ecdc4);border-radius:999px}
+
+    section{margin-bottom:30px}
+    h2.section-title{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:18px}
+
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+    .project{display:flex;flex-direction:column;gap:10px}
+    .project .cover{height:140px;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,#1f2937,#111827);display:flex;align-items:center;justify-content:center}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;font-size:12px;color:var(--muted)}
+
+    form.contact{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    form.contact .full{grid-column:1/-1}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:inherit}
+    textarea{min-height:120px;resize:vertical}
+    .note{font-size:13px;color:var(--muted)}
+
+    footer{text-align:center;color:var(--muted);padding:22px 0}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .container{margin:20px}
+      form.contact{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="avatar">PG</div>
+        <div>
+          <div style="font-weight:700">Pratiksha Gaikwad</div>
+          <div style="font-size:13px;color:var(--muted)">Full Stack Web Developer</div>
+        </div>
+      </div>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="intro card">
+          <h1>Hello — I'm Pratiksha</h1>
+          <p class="lead">I build responsive web apps using React, Node.js, and modern web technologies. I enjoy turning complex problems into clean, user-friendly interfaces.</p>
+          <div class="cta">
+            <button class="btn" onclick="downloadResume()"><i class="fa fa-download"></i>&nbsp;Download Resume</button>
+            <a class="btn ghost" href="#contact">Contact Me</a>
+          </div>
+
+          <div style="margin-top:18px" aria-hidden="true">
+            <strong>Currently:</strong> Building an LMS and improving UX for educational apps.
+          </div>
+        </div>
+
+        <aside class="card profile-card">
+          <div class="profile-photo">PG</div>
+          <div style="font-weight:600">Pratiksha Gaikwad</div>
+          <div class="note">Full Stack Developer • Nashik, India</div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)">
+
+          <div style="text-align:left">
+            <div class="skills" id="skills">
+              <div class="skill">
+                <div style="display:flex;justify-content:space-between;font-size:13px"><span>React</span><span>85%</span></div>
+                <div class="bar"><i style="width:85%"></i></div>
+              </div>
+              <div class="skill">
+                <div style="display:flex;justify-content:space-between;font-size:13px"><span>Node.js</span><span>80%</span></div>
+                <div class="bar"><i style="width:80%"></i></div>
+              </div>
+              <div class="skill">
+                <div style="display:flex;justify-content:space-between;font-size:13px"><span>MySQL</span><span>75%</span></div>
+                <div class="bar"><i style="width:75%"></i></div>
+              </div>
+              <div class="skill">
+                <div style="display:flex;justify-content:space-between;font-size:13px"><span>HTML/CSS</span><span>90%</span></div>
+                <div class="bar"><i style="width:90%"></i></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="projects">
+        <h2 class="section-title"><i class="fa fa-briefcase"></i> Projects</h2>
+        <div class="projects-grid">
+          <article class="project card">
+            <div class="cover">Amazon Clone UI</div>
+            <div>
+              <h3 style="margin:0 0 6px">Amazon Clone — Frontend</h3>
+              <p class="note">A responsive ecommerce UI built with React and Tailwind; includes cart, product grid and search.</p>
+              <div class="tags" style="margin-top:8px">
+                <span class="tag">React</span>
+                <span class="tag">Tailwind</span>
+                <span class="tag">Responsive</span>
+              </div>
+            </div>
+            <div style="margin-top:auto;display:flex;gap:8px;margin-top:12px">
+              <a class="btn" href="#" onclick="openProject('https://example.com')">Live</a>
+              <a class="btn ghost" href="#" onclick="openProject('https://github.com')">Code</a>
+            </div>
+          </article>
+
+          <article class="project card">
+            <div class="cover">LMS Project</div>
+            <div>
+              <h3 style="margin:0 0 6px">BeetSol LMS</h3>
+              <p class="note">A full-stack learning management system using Node.js, Express, MySQL and React for the frontend.</p>
+              <div class="tags" style="margin-top:8px">
+                <span class="tag">Node.js</span>
+                <span class="tag">MySQL</span>
+                <span class="tag">React</span>
+              </div>
+            </div>
+            <div style="margin-top:auto;display:flex;gap:8px;margin-top:12px">
+              <a class="btn" href="#">Demo</a>
+              <a class="btn ghost" href="#">Repo</a>
+            </div>
+          </article>
+
+          <article class="project card">
+            <div class="cover">Quiz System</div>
+            <div>
+              <h3 style="margin:0 0 6px">Quiz & Grading</h3>
+              <p class="note">An interactive quiz creation and grading tool with drag-and-drop question ordering and rich-text questions.</p>
+              <div class="tags" style="margin-top:8px">
+                <span class="tag">React</span>
+                <span class="tag">DnD</span>
+                <span class="tag">MySQL</span>
+              </div>
+            </div>
+            <div style="margin-top:auto;display:flex;gap:8px;margin-top:12px">
+              <a class="btn" href="#">Demo</a>
+              <a class="btn ghost" href="#">Repo</a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2 class="section-title"><i class="fa fa-envelope"></i> Contact</h2>
+        <div class="card">
+          <form class="contact" id="contactForm" onsubmit="return handleSubmit(event)">
+            <input type="text" id="name" placeholder="Your name" required />
+            <input type="email" id="email" placeholder="Your email" required />
+            <input class="full" type="text" id="subject" placeholder="Subject" />
+            <textarea class="full" id="message" placeholder="Message" required></textarea>
+            <div class="full" style="display:flex;align-items:center;justify-content:space-between">
+              <div class="note">Or mail me at <a href="mailto:pratiksha@example.com">pratiksha@example.com</a></div>
+              <button class="btn" type="submit">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      © <span id="year"></span> Pratiksha Gaikwad • Built with HTML5 & vanilla JS
+    </footer>
+  </div>
+
+  <!-- <script>
+    // Small interactive helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function downloadResume(){
+      // Replace with a real resume file path or remote URL
+      const url = 'resume.pdf';
+      const a = document.createElement('a');
+      a.href = url; a.download = 'Pratiksha_Gaikwad_Resume.pdf';
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    function openProject(url){
+      // Use real URLs for live demo and repo.
+      window.open(url,'_blank');
+    }
+
+    function handleSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim() || 'Message from Portfolio';
+      const message = document.getElementById('message').value.trim();
+
+      if(!name || !email || !message){
+        alert('Please fill name, email and message.');
+        return false;
+      }
+
+      // Basic email pattern check
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailPattern.test(email)){
+        alert('Please enter a valid email.');
+        return false;
+      }
+
+      // Example: fallback to `mailto:` so it works without a backend
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      const mailto = `mailto:pratiksha@example.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      window.location.href = mailto;
+
+      // If you have a server endpoint, replace above with a fetch POST to your API.
+
+      return false;
+    }
+  </script> -->
+</body> 
+</html>
