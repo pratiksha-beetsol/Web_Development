@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Task Manager</title>
+  <style>
+    /* Basic page layout */
+    :root{font-family: system-ui, Arial, sans-serif;}
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f4f7fb;margin:0;padding:20px}
+    .card{background:white;width:100%;max-width:520px;border-radius:12px;box-shadow:0 6px 18px rgba(17,24,39,0.08);padding:20px}
+
+    h1{margin:0 0 12px;font-size:20px}
+    p.small{color:#556; margin:0 0 16px}
+
+    /* input row */
+    .input-row{display:flex;gap:8px;margin-bottom:14px}
+    input[type=text]{flex:1;padding:10px;border:1px solid #d6dbe6;border-radius:8px;font-size:14px}
+    button{padding:10px 12px;border:none;background:#2563eb;color:#fff;border-radius:8px;font-weight:600;cursor:pointer}
+    button:active{transform:translateY(1px)}
+
+    /* task list */
+    ul.tasks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+    li.task{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;border:1px solid #eef2ff;background:#fbfdff}
+    li.task .label{flex:1;display:flex;align-items:center;gap:10px}
+    li.task.completed .text{text-decoration:line-through;color:#6b7280}
+
+    .text{font-size:14px}
+    .meta{font-size:12px;color:#94a3b8}
+
+    /* small icon buttons */
+    .btn-icon{background:transparent;border:none;cursor:pointer;padding:6px;border-radius:6px}
+    .btn-icon.delete{color:#dc2626}
+    .btn-icon.toggle{color:#059669}
+
+    /* empty placeholder */
+    .empty{padding:18px;border-radius:8px;background:#fbfbfb;text-align:center;color:#64748b}
+
+    /* responsive */
+    @media (max-width:420px){.card{padding:14px}}
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <h1>Simple Task Manager</h1>
+    <p class="small">Add tasks, mark complete, or delete. Tasks are saved locally in your browser.</p>
+
+    <div class="input-row">
+      <input id="taskInput" type="text" placeholder="Type a new task and press Add or Enter" aria-label="New task" />
+      <button id="addBtn">Add</button>
+    </div>
+
+    <ul id="taskList" class="tasks" aria-live="polite">
+      <!-- tasks will be injected here -->
+    </ul>
+
+    <div id="empty" class="empty" hidden>
+      No tasks yet — add one above ✨
+    </div>
+
+    
+  </main>
+
+  <script>
+
+    // Select important DOM elements once and reuse
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const taskList = document.getElementById('taskList');
+    const empty = document.getElementById('empty');
+
+    // Key used to save tasks in browser localStorage
+    const STORAGE_KEY = 'simple_tasks_v1';
+
+    // In-memory array of tasks. Each task is an object: { id, text, completed, createdAt }
+    let tasks = [];
+
+    // -----------------------------
+    // Helpers
+    // -----------------------------
+    function saveTasks() {
+      // localStorage can only store strings so we convert the array to JSON
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        tasks = JSON.parse(raw);
+      } catch (e) {
+        // if parsing fails, start fresh
+        tasks = [];
+      }
+    }
+
+    function uid() {
+      // simple unique id generator: timestamp + random number
+      return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    }
+
+    // -----------------------------
+    // DOM rendering
+    // -----------------------------
+    function render() {
+      // clear existing list
+      taskList.innerHTML = '';
+
+      if (tasks.length === 0) {
+        empty.hidden = false;
+        return;
+      } else {
+        empty.hidden = true;
+      }
+
+      // create list items
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.className = 'task' + (task.completed ? ' completed' : '');
+        li.dataset.id = task.id;
+
+        // label holds checkbox and text
+        const label = document.createElement('div');
+        label.className = 'label';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = task.completed;
+        checkbox.setAttribute('aria-label', 'Mark task complete');
+
+        // task text
+        const span = document.createElement('span');
+        span.className = 'text';
+        span.textContent = task.text;
+
+        // meta small timestamp
+        const time = document.createElement('div');
+        time.className = 'meta';
+        const d = new Date(task.createdAt);
+        time.textConte
+        nt = d.toLocaleString();
+
+        label.appendChild(checkbox);
+        label.appendChild(span);
+
+        // action buttons container
+        const actions = document.createElement('div');
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn-icon delete';
+        deleteBtn.title = 'Delete task';
+        deleteBtn.innerHTML = 'Delete';
+
+        // assemble
+        li.appendChild(label);
+        li.appendChild(time);
+        actions.appendChild(deleteBtn);
+        li.appendChild(actions);
+
+        // event: toggle complete
+        checkbox.addEventListener('change', () => {
+          toggleComplete(task.id);
+        });
+
+        // event: delete
+        deleteBtn.addEventListener('click', () => {
+          deleteTask(task.id);
+        });
+
+        taskList.appendChild(li);
+      });
+    }
+
+    // Core operations
+    function addTask(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return; // don't add empty tasks
+
+      const newTask = {
+        id: uid(),
+        text: trimmed,
+        completed: false,
+        createdAt: Date.now()
+      };
+
+      tasks.unshift(newTask); // add to the beginning
+      saveTasks();
+      render();
+      taskInput.value = '';
+      taskInput.focus();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      saveTasks();
+      render();
+    }
+
+    function toggleComplete(id) {
+      const t = tasks.find(x => x.id === id);
+      if (!t) return;
+      t.completed = !t.completed;
+      saveTasks();
+      render();
+    }
+    // Event listeners
+    addBtn.addEventListener('click', () => addTask(taskInput.value));
+
+    // press Enter to add
+    taskInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') addTask(taskInput.value);
+    });
+
+    // keyboard accessibility: allow Delete key to remove focused task
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Delete') {
+        // if an input is focused do nothing
+        if (document.activeElement.tagName.toLowerCase() === 'input') return;
+        // if there's at least one task remove the first (as a simple demo)
+        if (tasks.length) deleteTask(tasks[0].id);
+      }
+    });
+    // Initialization on page load
+
+    loadTasks();
+    render();
+  </script>
+</body>
+</html>
