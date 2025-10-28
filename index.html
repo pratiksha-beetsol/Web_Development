@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasty Bites Restaurant</title>
+  <style>
+    /* ======== RESET & GLOBAL ======== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      background: #fff;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ======== HEADER ======== */
+    header {
+      background: #312323;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    nav ul li {
+      font-weight: 500;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ======== HERO SECTION ======== */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 20px;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background: #fff;
+      color: #ff6b6b;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #ffecec;
+    }
+
+    /* ======== MENU SECTION ======== */
+    .menu {
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .menu h2 {
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .menu-item {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 250px; /* same height for all */
+      object-fit: cover; /* crop neatly */
+      border-radius: 10px;
+    }
+
+    .menu-item h3 {
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #ff6b6b;
+      font-weight: 600;
+      font-size: 1.2em;
+      min-height: 40px; /* ensures name alignment */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-item p {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    /* ======== ABOUT SECTION ======== */
+    .about {
+      background: #fff5f5;
+      padding: 50px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+    }
+    .about img {
+      width: 350px;
+      border-radius: 10px;
+    }
+    .about-text {
+      max-width: 500px;
+    }
+    .about-text h2 {
+      margin-bottom: 15px;
+      color: #ff6b6b;
+    }
+
+    /* ======== CONTACT SECTION ======== */
+    .contact {
+      padding: 50px 20px;
+      background: #f9f9f9;
+      text-align: center;
+    }
+    .contact h2 {
+      margin-bottom: 20px;
+      color: #ff6b6b;
+    }
+    .contact p {
+      margin-bottom: 10px;
+    }
+
+    /* ======== FOOTER ======== */
+    footer {
+      background: #312323;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    /* ======== RESPONSIVE DESIGN ======== */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+      }
+      .hero h1 {
+        font-size: 2em;
+      }
+      .hero p {
+        font-size: 1em;
+      }
+      .about {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about img {
+        width: 100%;
+        max-width: 400px;
+      }
+      .menu-item img {
+        height: 200px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">🍽️ Tasty Bites</div>
+    <nav>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <h1>Welcome to Tasty Bites</h1>
+    <p>Delicious meals made with love ❤️</p>
+    <a href="#menu" class="btn">View Menu</a>
+  </section>
+
+  <!-- MENU SECTION -->
+  <section class="menu" id="menu">
+    <h2>Our Menu</h2>
+    <div class="menu-items">
+      <div class="menu-item">
+        <img src="https://images.unsplash.com/photo-1528736235302-52922df5c122?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8R3JpbGxlZCUyMFNhbmR3aWNofGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600" alt="Grilled Sandwich">
+        <h3>Grilled Sandwich</h3>
+        <p>₹120</p>
+      </div>
+      <div class="menu-item">
+        <img src="https://images.unsplash.com/photo-1739643815373-72444e14c54b?auto=format&fit=crop&q=60&w=600" alt="Veg Pizza">
+        <h3>Veg Pizza</h3>
+        <p>₹250</p>
+      </div>
+      <div class="menu-item">
+        <img src="https://images.unsplash.com/photo-1551987840-f62d9c74ae78?auto=format&fit=crop&q=60&w=600" alt="Cheese Burger">
+        <h3>Cheese Burger</h3>
+        <p>₹180</p>
+      </div>
+      <div class="menu-item">
+        <img src="https://images.unsplash.com/photo-1612152328178-4a6c83d96429?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fHBhc3RhfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=600" alt="Cheese Burger">
+        <h3>Pasta</h3>
+        <p>₹250</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about" id="about">
+    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092" alt="Restaurant">
+    <div class="about-text">
+      <h2>About Us</h2>
+      <p>Welcome to Tasty Bites — your friendly neighborhood restaurant serving fresh, healthy, and delicious meals every day. Whether it’s a family dinner or a quick lunch, we’ve got you covered!</p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>📍 123 Main Street, Pune</p>
+    <p>📞 +91 98765 43210</p>
+    <p>🕓 Open: 10 AM – 10 PM</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Tasty Bites Restaurant. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
