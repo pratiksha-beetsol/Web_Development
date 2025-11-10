@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pratiksha — Advanced Portfolio</title>
+<meta name="description" content="Advanced portfolio showcasing projects, case studies, and skills — built with modern CSS Grid, Flexbox, animations, and accessible patterns.">
+
+<!-- Google fonts (optional) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* ========================
+     CSS VARIABLES (THEME)
+     ======================== */
+  :root{
+    --bg: #0f1724;
+    --card: #0b1220;
+    --muted: #94a3b8;
+    --accent: #ff6b6b;
+    --accent-2: #7c5cff;
+    --glass: rgba(255,255,255,0.06);
+    --glass-strong: rgba(255,255,255,0.08);
+    --surface-1: #0b1020;
+    --max-width: 1200px;
+    --radius: 12px;
+    --gap: 20px;
+    --ease: cubic-bezier(.2,.9,.3,1);
+  }
+
+  /* Light theme override */
+  [data-theme="light"] {
+    --bg: #f7f8fb;
+    --card: #ffffff;
+    --muted: #475569;
+    --accent: #ff6b6b;
+    --accent-2: #6b46ff;
+    --glass: rgba(255,255,255,0.6);
+    --glass-strong: rgba(255,255,255,0.8);
+    --surface-1: #ffffff;
+    color-scheme: light;
+  }
+
+  /* ========================
+     GLOBAL RESET & BASE
+     ======================== */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    background: linear-gradient(180deg,var(--bg), #02040a 120%);
+    color: #e6eef8;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+    padding:40px 20px;
+  }
+
+  /* center container */
+  .wrap{
+    max-width:var(--max-width);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 300px 1fr;
+    gap:var(--gap);
+    align-items:start;
+  }
+
+  /* Responsive layout collapse */
+  @media (max-width:900px){
+    .wrap{grid-template-columns:1fr; padding-bottom:40px}
+    body{padding:20px}
+  }
+
+  /* ========================
+     SIDEBAR / NAV
+     ======================== */
+  .sidebar{
+    position:sticky;
+    top:28px; /* sticky nav */
+    height:calc(100vh - 56px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--radius);
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .brand{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .avatar{
+    width:56px;height:56px;border-radius:12px;flex:0 0 56px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:grid;place-items:center;font-weight:700;color:white;font-size:18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45), inset 0 -4px 12px rgba(0,0,0,0.12);
+  }
+  .name{
+    display:flex;flex-direction:column;
+  }
+  .name strong{font-size:1.05rem}
+  .muted{color:var(--muted);font-size:0.9rem}
+
+  nav.primary {
+    display:flex;flex-direction:column;gap:6px;margin-top:6px;
+  }
+  nav.primary a{
+    padding:10px 12px;border-radius:10px;color:inherit;text-decoration:none;
+    display:flex;align-items:center;gap:10px;font-weight:600;
+    transition:background .25s var(--ease), transform .2s var(--ease);
+  }
+  nav.primary a:hover{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); transform:translateX(6px)}
+
+  .contact{
+    margin-top:auto;
+    display:flex;gap:10px;flex-direction:column;
+  }
+  .btn-ghost{
+    padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+    background:transparent;color:inherit;font-weight:600;cursor:pointer;
+  }
+
+  /* theme toggle */
+  .theme-toggle{margin-left:auto;background:transparent;border:0;color:var(--muted);cursor:pointer}
+
+  /* ========================
+     MAIN CONTENT
+     ======================== */
+  main{
+    min-height:80vh;
+  }
+
+  header.main-hero{
+    display:grid;gap:12px;
+    grid-template-columns: 1fr auto;
+    align-items:start;
+    margin-bottom:22px;
+  }
+  @media (max-width:900px){ header.main-hero{grid-template-columns:1fr} }
+
+  .intro{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:28px;
+    border-radius:var(--radius);
+    box-shadow: 0 8px 30px rgba(2,6,23,0.5);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:0.6px;font-size:0.86rem}
+  h1{font-size:1.9rem;margin:8px 0 0}
+  h1 .accent{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  p.lead{color:var(--muted);margin-top:10px}
+
+  /* CTA small card */
+  .cta-card{
+    width:260px;border-radius:12px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    display:flex;flex-direction:column;gap:12px;align-items:flex-start;
+  }
+  .cta-card strong{font-size:1.05rem}
+  .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));font-weight:700}
+
+  /* ========================
+     SKILLS & STATS
+     ======================== */
+  .skills{
+    margin-top:18px;
+    display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  }
+  @media (max-width:640px){ .skills{grid-template-columns:1fr} }
+
+  .skill{
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+    padding:12px;border-radius:10px;
+  }
+  .skill .bar{
+    margin-top:8px;height:10px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;
+  }
+  .skill .bar > i{
+    display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:999px;
+    transition: width .9s var(--ease);
+  }
+
+  /* ========================
+     PROJECTS GRID (ADVANCED)
+     ======================== */
+  .projects{
+    margin-top:26px;
+    display:grid;gap:18px;
+  }
+
+  /* Filter controls */
+  .filters{
+    display:flex;gap:10px;flex-wrap:wrap;
+    align-items:center;
+  }
+  .filters button{
+    border:1px solid rgba(255,255,255,0.04);
+    background:transparent;padding:8px 12px;border-radius:999px;color:var(--muted);cursor:pointer;font-weight:600;
+  }
+  .filters button.active{
+    color:white;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    border:0;
+  }
+
+  /* grid of cards */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+  }
+  @media (max-width:1100px){ .grid{grid-template-columns: repeat(2, 1fr)} }
+  @media (max-width:700px){ .grid{grid-template-columns: 1fr} }
+
+  .card{
+    background:var(--card);border-radius:12px;padding:0;overflow:hidden;position:relative;
+    display:flex;flex-direction:column;min-height:260px;box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+    border:1px solid rgba(255,255,255,0.02);
+  }
+  .card:hover{ transform: translateY(-8px); box-shadow: 0 18px 50px rgba(0,0,0,0.6) }
+
+  .card .media{
+    height:160px;background-size:cover;background-position:center;flex:0 0 160px;
+  }
+  .card .content{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:0.9rem}
+  .tags{display:flex;gap:8px;flex-wrap:wrap}
+  .tags span{font-size:0.78rem;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02)}
+
+  /* overlay hover action */
+  .card .overlay{
+    position:absolute;inset:0;display:grid;place-items:center;opacity:0;pointer-events:none;
+    background:linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.45));
+    transition:opacity .25s var(--ease);
+  }
+  .card:hover .overlay{opacity:1;pointer-events:auto}
+  .card .open-btn{
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;padding:12px 18px;border-radius:999px;color:white;font-weight:700;cursor:pointer;
+  }
+
+  /* ========================
+     CASE STUDY MODAL (simple)
+     ======================== */
+  .modal{
+    position:fixed;inset:0;display:none;place-items:center;background:rgba(2,6,23,0.6);z-index:60;padding:20px;
+  }
+  .modal.open{display:grid}
+  .modal-panel{
+    width:min(900px,98%);background:var(--card);border-radius:12px;padding:18px;color:inherit;max-height:90vh;overflow:auto;
+    border:1px solid rgba(255,255,255,0.03)
+  }
+  .modal-panel h3{margin-top:6px}
+  .close-x{margin-left:auto;background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:700}
+
+  /* ========================
+     FOOTER
+     ======================== */
+  footer.site-footer{margin-top:28px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;justify-content:space-between;align-items:center}
+  @media (max-width:700px){ footer.site-footer{flex-direction:column;gap:12px} }
+
+  /* ========================
+     ANIMATIONS & REVEAL (intersection)
+     ======================== */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease), transform .6s var(--ease)}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* small utilities */
+  .muted-2{color:var(--muted)}
+  .center{display:flex;align-items:center;justify-content:center}
+  .small{font-size:0.85rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" aria-label="Sidebar">
+    <div class="brand">
+      <div class="avatar">P</div>
+      <div class="name">
+        <strong>Pratiksha Gaikwad</strong>
+        <span class="muted small">Frontend Developer • UI/UX Enthusiast</span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌓</button>
+    </div>
+
+    <nav class="primary" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="contact">
+      <div class="small muted-2">Location</div>
+      <div> Nashik, India</div>
+
+      <div class="small muted-2">Email</div>
+      <a class="small" href="mailto:pratiksha@example.com">pratiksha@example.com</a>
+
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <a class="btn-ghost" href="#" aria-label="Github">GitHub</a>
+        <a class="btn-ghost" href="#" aria-label="LinkedIn">LinkedIn</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- HERO / INTRO -->
+    <header class="main-hero reveal">
+      <section class="intro">
+        <div class="kicker">Hi, I build delightful web experiences</div>
+        <h1>Hi — I'm <span class="accent">Pratiksha</span>, a frontend developer building responsive, accessible interfaces</h1>
+        <p class="lead">I specialize in React, modern CSS (Grid & Flexbox), and producing pixel-perfect UI. Below are selected projects and case studies.</p>
+
+        <div class="skills">
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <strong>React</strong><span class="small muted-2">Advanced</span>
+            </div>
+            <div class="bar"><i style="width:85%"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <strong>CSS / UI</strong><span class="small muted-2">Advanced</span>
+            </div>
+            <div class="bar"><i style="width:92%"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <strong>Accessibility</strong><span class="small muted-2">Intermediate</span>
+            </div>
+            <div class="bar"><i style="width:74%"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <strong>Node / APIs</strong><span class="small muted-2">Intermediate</span>
+            </div>
+            <div class="bar"><i style="width:68%"></i></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="cta-card reveal">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="chip">Available for hire</div>
+        </div>
+        <strong>Let's work together</strong>
+        <div class="small muted-2">Open to remote and hybrid roles. I love clean UI systems and delightful interactions.</div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <a class="open-btn" href="#contact">Hire Me</a>
+          <a class="btn-ghost" href="#" download>Resume</a>
+        </div>
+      </aside>
+    </header>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="projects reveal">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>
+          <h2>Selected Projects</h2>
+          <div class="small muted-2">Case studies, product builds, UI experiments</div>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Project filters">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="web">Web</button>
+          <button class="filter" data-filter="ui">UI</button>
+          <button class="filter" data-filter="react">React</button>
+        </div>
+      </div>
+
+      <div class="grid" id="projectGrid">
+        <!-- CARD 1 -->
+        <article class="card reveal" data-type="web react">
+          <div class="media" style="background-image:url('https://picsum.photos/id/1018/1000/600')"></div>
+          <div class="content">
+            <div class="meta"><strong>E-commerce UI</strong><span class="small muted-2">React • Stripe</span></div>
+            <p class="small muted-2">A performance-first shop UI with accessible cart and checkout flows.</p>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto">
+              <div class="tags"><span>ecommerce</span><span>payments</span></div>
+              <div style="margin-left:auto;">
+                <button class="open-btn" data-title="E-commerce UI" data-img="https://picsum.photos/id/1018/1000/600" data-desc="Built with React, optimized images and smart cart UX.">View</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="card reveal" data-type="ui">
+          <div class="media" style="background-image:url('https://picsum.photos/id/1025/1000/600')"></div>
+          <div class="content">
+            <div class="meta"><strong>Landing Page (UI)</strong><span class="small muted-2">Design • Prototyping</span></div>
+            <p class="small muted-2">High-conversion landing with microcopy, A/B-ready hero, and subtle motion.</p>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto">
+              <div class="tags"><span>ux</span><span>design</span></div>
+              <div style="margin-left:auto;">
+                <button class="open-btn" data-title="Landing Page (UI)" data-img="https://picsum.photos/id/1025/1000/600" data-desc="A/B-ready hero components with fast loading LCP.">View</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="card reveal" data-type="react web">
+          <div class="media" style="background-image:url('https://picsum.photos/id/1035/1000/600')"></div>
+          <div class="content">
+            <div class="meta"><strong>Dashboard App</strong><span class="small muted-2">React • Charts</span></div>
+            <p class="small muted-2">Admin dashboard with grid layout, filters and responsive visualizations.</p>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto">
+              <div class="tags"><span>dashboard</span><span>charts</span></div>
+              <div style="margin-left:auto;">
+                <button class="open-btn" data-title="Dashboard App" data-img="https://picsum.photos/id/1035/1000/600" data-desc="Responsive admin UI with customizable widgets.">View</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 4 -->
+        <article class="card reveal" data-type="ui">
+          <div class="media" style="background-image:url('https://picsum.photos/id/1043/1000/600')"></div>
+          <div class="content">
+            <div class="meta"><strong>Microinteraction Library</strong><span class="small muted-2">Animation • CSS</span></div>
+            <p class="small muted-2">Small, reusable CSS components (toggles, chips, loaders) — tiny but delightful.</p>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto">
+              <div class="tags"><span>css</span><span>micro</span></div>
+              <div style="margin-left:auto;">
+                <button class="open-btn" data-title="Microinteraction Library" data-img="https://picsum.photos/id/1043/1000/600" data-desc="Small animated UI primitives with accessibility baked in.">View</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 5 -->
+        <article class="card reveal" data-type="react">
+          <div class="media" style="background-image:url('https://picsum.photos/id/1059/1000/600')"></div>
+          <div class="content">
+            <div class="meta"><strong>Interactive Map</strong><span class="small muted-2">React • Maps</span></div>
+            <p class="small muted-2">Custom map visualizations and offline caching for mobile.</p>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto">
+              <div class="tags"><span>maps</span><span>pwa</span></div>
+              <div style="margin-left:auto;">
+                <button class="open-btn" data-title="Interactive Map" data-img="https://picsum.photos/id/1059/1000/600" data-desc="Map UI with custom markers and offline tiles.">View</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 6 -->
+        <article class="card reveal" data-type="web ui">
+          <div class="media" style="background-image:url('https://picsum.photos/id/1069/1000/600')"></div>
+          <div class="content">
+            <div class="meta"><strong>Marketing Site</strong><span class="small muted-2">Performance • SEO</span></div>
+            <p class="small muted-2">SEO-first marketing site with optimized imagery and SSR-ready components.</p>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto">
+              <div class="tags"><span>marketing</span><span>seo</span></div>
+              <div style="margin-left:auto;">
+                <button class="open-btn" data-title="Marketing Site" data-img="https://picsum.photos/id/1069/1000/600" data-desc="Performance-first marketing site with quick LCP.">View</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div> <!-- grid -->
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer reveal">
+      <div>© <span id="year"></span> Pratiksha Gaikwad — Built with modern CSS</div>
+      <div class="small muted-2">Want the code? Clone the repo — send me a message</div>
+    </footer>
+
+  </main>
+</div>
+
+<!-- CASE STUDY MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-panel" role="document">
+    <div style="display:flex;gap:10px;align-items:center">
+      <h3 id="modalTitle">Project Title</h3>
+      <button class="close-x" id="closeModal" aria-label="Close">✕</button>
+    </div>
+    <img id="modalImg" src="" alt="" style="width:100%;border-radius:8px;margin-top:12px;height:auto;object-fit:cover">
+    <p id="modalDesc" class="small muted-2" style="margin-top:10px"></p>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <a class="open-btn" href="#" target="_blank">View Live</a>
+      <a class="btn-ghost" href="#" target="_blank">Source</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================
+   Small JS: theme, filters, modal, reveal
+   ========================= */
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* THEME TOGGLE */
+const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+themeToggle.addEventListener('click', () => {
+  const current = root.getAttribute('data-theme');
+  if (current === 'light') {
+    root.removeAttribute('data-theme');
+    localStorage.removeItem('theme');
+  } else {
+    root.setAttribute('data-theme','light');
+    localStorage.setItem('theme','light');
+  }
+});
+if (localStorage.getItem('theme') === 'light') root.setAttribute('data-theme','light');
+
+/* FILTERS (JS controlled for easier UX) */
+const filters = document.querySelectorAll('.filters .filter');
+const grid = document.getElementById('projectGrid');
+filters.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filters.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const key = btn.getAttribute('data-filter');
+    const cards = grid.querySelectorAll('.card');
+    cards.forEach(c=>{
+      if (key === 'all') { c.style.display = ''; return; }
+      const types = c.getAttribute('data-type') || '';
+      if (types.split(' ').includes(key)) c.style.display = '';
+      else c.style.display = 'none';
+    });
+  });
+});
+
+/* MODAL (case study) */
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modalTitle');
+const modalImg = document.getElementById('modalImg');
+const modalDesc = document.getElementById('modalDesc');
+const closeModal = document.getElementById('closeModal');
+
+document.querySelectorAll('.open-btn[data-title]').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    const t = btn.getAttribute('data-title');
+    const img = btn.getAttribute('data-img');
+    const desc = btn.getAttribute('data-desc');
+    modalTitle.textContent = t;
+    modalImg.src = img;
+    modalDesc.textContent = desc;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+  });
+});
+closeModal.addEventListener('click', ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true') })
+modal.addEventListener('click', (e)=>{ if (e.target === modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true') } })
+
+/* REVEAL ON SCROLL: IntersectionObserver */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* PROGRESS BARS: animate on load (if visible) */
+window.addEventListener('load', ()=> {
+  document.querySelectorAll('.skill .bar > i').forEach(i => {
+    const w = i.style.width || '60%';
+    i.style.width = '0';
+    setTimeout(()=> i.style.width = w, 300);
+  });
+});
+
+/* Accessibility: trap focus in modal if open (simple) */
+document.addEventListener('keydown', (e)=>{
+  if (e.key === 'Escape' && modal.classList.contains('open')) {
+    modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+  }
+});
+</script>
+
+</body>
+</html>
